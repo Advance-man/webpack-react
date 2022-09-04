@@ -122,7 +122,7 @@ module.exports = {
             options: {
               cacheDirectory:true,   // 启动babel-loader缓存
               cacheCompression:false,//缓存时禁止压缩
-            }
+            },
           }
         ],
         }]
@@ -160,10 +160,15 @@ module.exports = {
         react:{
           test:/node_modules[\\/]react(.*)?[\\/]/,
           name:"chunk-react",
-          priority:30,
+          priority:40,
         },
         lodash:{
           test:/node_modules[\\/]lodash[\\/]/,
+          name:"chunk-lodash",
+          priority:30,
+        },
+        antd:{
+          test:/node_modules[\\/]antd[\\/]/,
           name:"chunk-lodash",
           priority:20,
         },
