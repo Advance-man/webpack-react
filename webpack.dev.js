@@ -21,109 +21,111 @@ module.exports = {
   module:{
     rules:[
       {
-        test:/\.css$/,     // 处理css文件
-        use:[
-          MiniCssExtractPlugin.loader,  // 将CSS 插入到 DOM 中
-          "css-loader",     // 将css转为js认识的模块
-          {
-            loader:"postcss-loader",
-            options:{
-              postcssOptions:{
-                plugins:[
-                  ["postcss-preset-env"]
-                ]
+        oneOf:[{
+          test:/\.css$/,     // 处理css文件
+          use:[
+            MiniCssExtractPlugin.loader,  // 将CSS 插入到 DOM 中
+            "css-loader",     // 将css转为js认识的模块
+            {
+              loader:"postcss-loader",
+              options:{
+                postcssOptions:{
+                  plugins:[
+                    ["postcss-preset-env"]
+                  ]
+                }
               }
             }
-          }
-        ]
-      },
-      {
-        test:/\.less$/,   //处理less文件
-        use:[
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          {
-            loader:"postcss-loader",  //使用postcss对CSS做兼容性处理，同时package.json田间browserslist
-            options:{
-              postcssOptions:{
-                plugins:[
-                  ["postcss-preset-env"]
-                ]
+          ]
+        },
+        {
+          test:/\.less$/,   //处理less文件
+          use:[
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+            {
+              loader:"postcss-loader",  //使用postcss对CSS做兼容性处理，同时package.json田间browserslist
+              options:{
+                postcssOptions:{
+                  plugins:[
+                    ["postcss-preset-env"]
+                  ]
+                }
               }
-            }
-          },
-          "less-loader"   //将less转为css，下载依赖时需要下载less
-        ]
-      },
-      {
-        test:/\.s[ac]ss$/,
-        use:[
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          {
-            loader:"postcss-loader", //
-            options:{
-              postcssOptions:{
-                plugins:[
-                  ["postcss-preset-env"]
-                ]
+            },
+            "less-loader"   //将less转为css，下载依赖时需要下载less
+          ]
+        },
+        {
+          test:/\.s[ac]ss$/,
+          use:[
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+            {
+              loader:"postcss-loader", //
+              options:{
+                postcssOptions:{
+                  plugins:[
+                    ["postcss-preset-env"]
+                  ]
+                }
               }
-            }
-          },
-          "sass-loader"
-        ]
-      },
-      {
-        test:/\.styl$/,
-        use:[
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          {
-            loader:"postcss-loader",
-            options:{
-              postcssOptions:{
-                plugins:[
-                  ["postcss-preset-env"]
-                ]
+            },
+            "sass-loader"
+          ]
+        },
+        {
+          test:/\.styl$/,
+          use:[
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+            {
+              loader:"postcss-loader",
+              options:{
+                postcssOptions:{
+                  plugins:[
+                    ["postcss-preset-env"]
+                  ]
+                }
               }
+            },
+            "stylus-loader"
+          ]
+        },
+        {
+          test:/\.(png|jpe?g)/, //处理图片资源
+          type:"asset",
+          parser: {
+            dataUrlCondition: {
+              maxSize: 10 * 1024 // 10kb
             }
-          },
-          "stylus-loader"
-        ]
-      },
-      {
-        test:/\.(png|jpe?g)/, //处理图片资源
-        type:"asset",
-        parser: {
-          dataUrlCondition: {
-            maxSize: 10 * 1024 // 10kb
-          }
-        }
-      },
-      {
-        test:/\.(ttf|woff2?|mp3|mp4)/, //处理字体资源
-        type:"asset/resource",
-        generator: {
-          filename: 'static/style/media/[hash][ext][query]'
-        }
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        use: [{
-          loader:"thread-loader",
-          options:{
-            works: threads, //babel 启动多进程
           }
         },
         {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory:true,   // 启动babel-loader缓存
-            cacheCompression:false,//缓存时禁止压缩
+          test:/\.(ttf|woff2?|mp3|mp4)/, //处理字体资源
+          type:"asset/resource",
+          generator: {
+            filename: 'static/style/media/[hash][ext][query]'
           }
-        }
-      ],
+        },
+        {
+          test: /\.jsx?$/,
+          exclude: /(node_modules|bower_components)/,
+          use: [{
+            loader:"thread-loader",
+            options:{
+              works: threads, //babel 启动多进程
+            }
+          },
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory:true,   // 启动babel-loader缓存
+              cacheCompression:false,//缓存时禁止压缩
+            }
+          }
+        ],
+        }]
       }
     ]
   },
@@ -179,7 +181,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json', '.wasm'],
   },
-  devtool:"source-map",
+  devtool:"cheap-module-source-map",
   devServer:{
     host:"localhost",
     port:3000,
