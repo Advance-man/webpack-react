@@ -1,6 +1,6 @@
 module.exports = {
   presets: ["react-app"],
-  plugins: ['@babel/transform-runtime']
+  // plugins: ['@babel/transform-runtime']
 };
 
 

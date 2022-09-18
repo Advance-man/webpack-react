@@ -4,12 +4,14 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");//将css提取到一个文件中
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin"); // css压缩
 const TerserWebpackPlugin = require("terser-webpack-plugin"); //js压缩
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const os = require("os");
 
 const threads = os.cpus().length;
 
 module.exports = {
-  mode:"development",  //配置webpack 工作模式：development production none 三种模式
+  // mode:"development",  //配置webpack 工作模式：development production none 三种模式
   entry:'./src/main.js',//入口文件
   output:{
     path: path.resolve(__dirname,"dist"),//输出目录
@@ -141,9 +143,10 @@ module.exports = {
       template:path.resolve(__dirname,"public/index.html")
     }),
     new MiniCssExtractPlugin({
-      filename: "static/style/css/[name].[conthash:10].css",
-      chunkFilename:"static/style/css/[name].chunk.[conthash:10].css",
-    })
+      filename: "static/style/css/[name].[contenthash:10].css",
+      chunkFilename:"static/style/css/[name].chunk.[contenthash:10].css",
+    }),
+    new BundleAnalyzerPlugin()
   ],
   optimization: {
     minimize: true,
@@ -169,7 +172,7 @@ module.exports = {
         },
         antd:{
           test:/node_modules[\\/]antd[\\/]/,
-          name:"chunk-lodash",
+          name:"chunk-antd",
           priority:20,
         },
         lib:{
