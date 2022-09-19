@@ -1,6 +1,5 @@
 // 实现简单的promise
-// export 
-class Promise{
+export class Promise{
   constructor(callback){
     this.status = "pending";
     this.value = "";

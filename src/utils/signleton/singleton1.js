@@ -1,4 +1,4 @@
-// 单例模式
+// 单例模式 Class实现
 export class Signleton{
   static instance = null
   constructor(name){

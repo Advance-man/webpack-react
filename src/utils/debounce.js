@@ -3,8 +3,7 @@
 //const { debounce } = require("lodash");
 
 //所以就是最后连续调用多次的话，之后最后一次才会呗调用；
-// export 
-const debounce = function (fn,delay) {
+export const debounce = function (fn,delay) {
   let timer = null;
 
   return (...args)=>{
