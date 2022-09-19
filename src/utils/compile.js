@@ -1,3 +1,4 @@
+// 模板引擎
 function compile(template){
   template = template.replace(/\{\{(.+)\}\}/gu,function () {
     console.log(arguments);
