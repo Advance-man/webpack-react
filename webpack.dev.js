@@ -188,6 +188,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.json', '.wasm'],
+    alias:{
+      "@": path.join(__dirname,"src")
+    }
   },
   devtool:"cheap-module-source-map",
   devServer:{
